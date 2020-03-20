@@ -326,7 +326,7 @@ interface Props {
 
 React のコンポーネントは、**props** と **state** の2つの値を持つことができる。
 
-props はコンポーネントが生成されたときに渡されるプロパティ (**prop**ertie**s**)で、public かつイミュータブルである。 +
+props はコンポーネントが生成されたときに渡されるプロパティ (*prop* ertie *s*)で、public かつイミュータブルである。 +
 一方の state は、private かつミュータブル。いわゆる「状態」だ。
 
 今回作るボタンは、
