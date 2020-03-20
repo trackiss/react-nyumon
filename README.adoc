@@ -16,6 +16,8 @@ trackiss
 TypeScript の syntax についてもなるべく解説を挟んでいくので、そこまでの事前知識は必要ない。 +
 最低限、何らかのプログラミング言語がなんとなく読めて、HTML や CSS がだいたい理解できていれば良い。
 
+{br}
+
 == 環境について
 
 以下の環境を前提とする。裁量次第で適宜変更しても良い。
@@ -31,9 +33,13 @@ TypeScript の syntax についてもなるべく解説を挟んでいくので�
 ** 「Bracket Pair Colorizer 2」もおすすめ
 ** 宗教上の理由でほかのテキストエディタや IDE を使うというのなら止めはしまい
 
+[br]
+
 == 開発環境のセットアップ
 
 上記の環境が整っているなら以下へ進む。
+
+{br}
 
 === Node.js のインストール
 
@@ -42,6 +48,7 @@ Nodist などのバージョン管理ツールであったり、Chocolatey や s
 
 古いバージョンが既にインストールされているなら事前にアンインストールする。
 
+{br}
 
 === yarn のインストール
 
@@ -51,6 +58,8 @@ link:https://github.com/yarnpkg/yarn/releases[ここから]最新のバージョ
 Chocolatey か scoop からインストールしても良い。
 
 そして VSCode に拡張機能「*ESLint*」がインストールされていることを確認したら、設定の `Eslint: Package Manager` という項目を `npm` から `yarn` に変更する。
+
+{br}
 
 == HelloWorld
 
