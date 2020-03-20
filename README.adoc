@@ -376,6 +376,10 @@ export const MyButton: React.FC<Props> = (props: Props) => {
 これもよ～く見てみると、`const 変数名: 型アノテーション = 値` という形になっているはずだ。 +
 そしてその型は `React.FC<Props>` となっている。
 
+{br}
+
+#### 関数コンポーネント
+
 このコンポーネントの定義方法は**関数コンポーネント**と呼ばれる手法だ。`React.FC<P>` は `React.FunctionalComponent<P>` のエイリアスである。
 
 今回作成するボタンは props は受け取るが、反面 *state を持たない*。それはつまり、一度作られたら破棄されるまで「状態が変わらない」ということになる。 +
@@ -383,6 +387,8 @@ export const MyButton: React.FC<Props> = (props: Props) => {
 
 さて、この `クラス名<型プロパティ>` というシンタックスは、Java ユーザーならおなじみの**ジェネリック**だ。 +
 細かい説明は省くが、要は「このコンポーネントは `Props` というインターフェースに沿った props を受け取るよ」と `React.FC<P>` に伝えているのだ。
+
+{br}
 
 そして `MyButton` は `(Props) => React.FC<Props>` という関数オブジェクトを返している。 +
 その `return` 文の中身は... なんと *HTML* そっくりではないか。
