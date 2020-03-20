@@ -320,6 +320,8 @@ interface Props {
 
 これは、*props* の型定義である。
 
+{br}
+
 ==== props と state
 
 React の component は、**props** と **state** の2つの値を持つことができる。
@@ -352,7 +354,7 @@ TypeScript には、ほかに浮動小数点数型である *number* 型と、�
 TIP: これは多くの場合、type-inference、つまり型推論と相性が良い。型推論のためにわざわざ `var` や `auto` などのキーワードを用意するよりも、型アノテーションを後置にして省略できるようにした方がより明確でスマートだ。
 
 [[tip-first-class-function]]
-.`first-class function`
+.*first-class function*
 TIP: 関数をオブジェクトと同等に扱えるとき、「関数は**第一級オブジェクト**である」と言う。また、そうして扱える関数及びその性質を**第一級関数**と呼ぶ。第一級関数はプログラミングの柔軟さを大幅に高めることができる手法の一つで、ここ数年のプログラミング言語における流行でもある。
 
 {br}
