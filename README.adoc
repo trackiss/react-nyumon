@@ -340,7 +340,7 @@ props はコンポーネントが生成されたときに渡されるプロパ�
 TypeScript では、最近の言語に多い `変数名: 型アノテーション` スタイルlink:#tip-type-annotation[^※^]の表記をする。
 
 `label` は *string* 型、つまり**文字列型**だ。 +
-TypeScript には、ほかに浮動小数点数型である *number* 型と、論理値型である *boolean* 型、何も返さない *void* 型、あらゆる型を指す *any* 型がある。
+TypeScript には、ほかに浮動小数点数型である *number* 型と、論理値型である *boolean* 型、何も返さない *void* 型、あらゆる型を指す *any* 型、型安全な any 型である *unknown* 型がある。
 
 `onClick?` の `?` は、省略可能であることを示す。ボタンが押されても何もしたくない怠慢な人でもこれで安心だ。
 
