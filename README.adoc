@@ -119,9 +119,6 @@ TIP: TypeScript 向けの型定義ファイルを指す。
 [source, json]
 ----
 {
-  {
-    ...
-  },
   "scripts": {
     "build": "webpack",
     "dev": "webpack-serve"
