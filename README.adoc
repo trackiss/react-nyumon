@@ -281,7 +281,6 @@ React は、*component* という細かな要素を組み合わせて設計し�
 
 [source, tsx]
 ----
-```tsx
 import * as React from 'react'
 
 interface Props {
