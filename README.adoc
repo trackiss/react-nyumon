@@ -1,0 +1,353 @@
+= ReactTS入門メモ
+trackiss
+0.0.1, 2020-03-20
+:br: pass:[ +]
+:doctype: article
+:icons: font
+:note-caption: :information_source:
+:syntax-highlighter: rouge
+:toc:
+:toc-title: 目次
+
+== これは何
+
+*React* + *TypeScript* の入門メモ。 +
+クオリティは保証しないが、私自身が覚えながら書いたものであるため、初心者にとっては参考にはなるかもしれない。
+
+TypeScript の syntax についてもなるべく解説を挟んでいくので、そこまでの事前知識は必要ない。 +
+最低限、何らかのプログラミング言語がなんとなく読めて、HTML や CSS がだいたい理解できていれば良い。
+
+== 環境について
+
+以下の環境を前提とする。裁量次第で適宜変更しても良い。
+
+* *Windows*
+** macOS でも任意の Linux でも FreeBSD でも何でも
+** Node さえ動けばヨシ
+* *Google Chrome* 及び任意の Chromium 系ブラウザ
+** Firefox でも良い
+** Edge を使っているのなら、link:https://microsoftedgewelcome.microsoft.com/ja-jp/[ここから]新しい Edge をインストールしよう。悪いことは言わないから。マジで
+* *Visual Studio Code*
+** 拡張機能「*ES7 React/Redux/GraphQL/React-Native snippets*」「*ESLint*」「*Visual Studio IntelliCode*」も併せてインストールする
+** 「Bracket Pair Colorizer 2」もおすすめ
+** 宗教上の理由でほかのテキストエディタや IDE を使うというのなら止めはしまい
+
+== 開発環境のセットアップ
+
+上記の環境が整っているなら以下へ進む。
+
+=== Node.js のインストール
+
+まずは *Node.js* をインストールする。link:https://nodejs.org/ja/[ここから]最新の LTS 版をインストールする。 +
+Nodist などのバージョン管理ツールであったり、Chocolatey や scoop などのパッケージマネージャを使っている場合は、適宜 そちらの方法で導入する。
+
+古いバージョンが既にインストールされているなら事前にアンインストールする。
+
+
+=== yarn のインストール
+
+Node.js の標準パッケージマネージャは npm だが、React では新しいパッケージマネージャである **yarn** の使用を推奨している。
+
+link:https://github.com/yarnpkg/yarn/releases[ここから]最新のバージョンをダウンロードし、インストールする。`yarn-1.xx.x.msi` というファイルだ。  
+Chocolatey か scoop からインストールしても良い。
+
+そして VSCode に拡張機能「*ESLint*」がインストールされていることを確認したら、設定の `Eslint: Package Manager` という項目を `npm` から `yarn` に変更する。
+
+== HelloWorld
+
+React のプロジェクトを作るのには、`yarn create react-app --typescript` コマンドで一発だ。しかし、これで作られる雛形はいささか複雑で、その構造を学ぶのにはあまり適していない。
+
+そこで、はじめは空っぽの状態から作り始めてみよう。
+
+{br}
+
+=== プロジェクトの初期化
+
+[source, shell]
+----
+yarn init
+----
+
+するといくつか質問が始まるので、とりあえず何も考えずに Enter を連打して済ませてしまおう。
+
+{br}
+
+=== TypeScript と webpack のインストール
+
+*TypeScript* と **webpack**link:#note-webpack[^※^] のインストールを行う。 +
+hot-reload をするための webpack-serve と html-webpack-plugin に加え、TypeScript と webpack を連携させる ts-loader、source-map-loader も併せてインストールする。
+
+[source, shell]
+----
+yarn add --dev typescript webpack webpack-serve html-webpack-plugin ts-loader source-map-loader
+----
+
+{br}
+
+[[note-webpack]]
+.*webpack*
+NOTE: 複雑な依存関係にある大量のソースコードを1つのファイルへパッケージングしてくれるツール。ほぼ必須。
+
+{br}
+
+=== React のインストール
+
+*React* のインストールを行う。
+
+[source, shell]
+----
+yarn add react @types/react
+----
+
+[source, shell]
+----
+yarn add --dev react-dom @types/react-dom
+----
+
+{br}
+
+.*@types/PACKAGE_NAME*
+TIP: TypeScript 向けの型定義ファイルを指す。
+
+{br}
+
+=== package.json の編集
+
+今のところ、プロジェクトの中には `./package.json` のみがあるはずだ。 +
+そこへ以下の内容を追記する。
+
+[source, json]
+----
+{
+  {
+    ...
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-serve"
+  }
+}
+----
+
+{br}
+
+=== tsconfig.json の作成
+
+TypeScript についての設定を書く。 +
+`./tsconfug.json` を作成し、以下の内容を記述する。
+
+[source, json]
+----
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "esnext",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "es5"
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
+----
+
+大雑把に言うと、
+
+* return を強制
+** むしろ return がなくてもコンパイル通る可能性がある意味がわからん
+* 使用していないローカル変数の禁止
+* 使用していない引数パラメータの禁止
+* バイナリは `./dist` ディレクトリへ
+* `./src` ディレクトリを `~` と書けるようにする
+* ライブラリの検査はしない
+* 型検査を厳格にする
+** 暗黙の any 型は禁止
+** 型定義のない this は禁止
+** function の型検査を厳格にする
+** function の型推論を賢くする
+** null 及び undefined の非許容
+
+といった具合の内容だ。
+
+{br}
+
+### webpack.config.js の作成
+
+webpack についての設定を書く。 +
+`./webpack.config.js` を作成し、以下の内容を記述する。
+
+[source, js]
+----
+import Path from 'path'
+import HtmlPlugin from 'html-webpack-plugin'
+
+module.exports = {
+  devtool: 'source-map',
+  entry: './src/index.tsx',
+
+  externals: {
+    "react": "React",
+    "react-dom": "ReactDOM"
+  },
+
+  output: {
+    filename: 'bundle.js',
+    path: Path.resolve(__dirname + '/dist')
+  },
+
+  module: {
+    rules: [
+      {
+        loader: 'ts-loader',
+        test: /\.tsx?$/
+      },
+      {
+        enforce: 'pre',
+        loader: 'source-map-loader',
+        test: /\.js$/
+      }
+    ]
+  },
+
+  plugins: [
+    new HtmlPlugin({
+      template: './index.html'
+    })
+  ],
+
+  resolve: {
+    extensions: ['.js', '.json', '.ts', '.tsx']
+  }
+}
+----
+
+ここは、まぁそういうものだと思ってほしい。もっと深く知りたいならググれ。
+
+{br}
+
+### index.html の作成
+
+最も外郭にあたる `index.html` を作成する。
+
+`./index.html` を作成し、以下の内容を記述する。
+
+[source, html]
+----
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>ReactTS Example</title>
+</head>
+
+<body>
+  <div class="root"></div> <!--1-->
+
+  <script src="./dist/bundle.js"></script>
+  <script src="./node_modules/react/dist/react.js"></script>
+  <script src="./node_modules/react-dom/dist/react-dom.js"></script>
+</body>
+
+</html>
+----
+
+(1) の部分が、 React が描画する領域になる。
+
+{br}
+
+### ボタンの作成
+
+React は、*component* という細かな要素を組み合わせて設計していく。 +
+このとき、親 (上位) の　component は 子 (下位) の component を生成して持つことができる。
+
+手始めにボタンの component を自作してみよう。 +
+`./src/components` というフォルダを作成し、その中に作った `MyButton.tsx` に以下の内容を記述する。
+
+[source, tsx]
+----
+```tsx
+import * as React from 'react'
+
+interface Props {
+  label: string,
+  onClick?: () => void
+}
+
+export const MyButton: React.FC<Props> = (props: Props) => {
+  return (
+    <button onClick={props.onClick}>{props.label}</button>
+  )
+}
+----
+
+{br}
+
+詳しく説明していこう。
+
+{br}
+
+[source, tsx]
+----
+import * as React from 'react'
+----
+
+ここは、「すべて (`*`) を `React` という名前として `react` というライブラリの中から import する」という意味である。そのままだ。
+
+{br}
+
+[source, tsx]
+----
+interface Props {
+  label: string,
+  onClick?: () => void
+}
+----
+
+これは、*props* の型定義である。
+
+==== props と state
+
+React の component は、**props** と **state** の2つの値を持つことができる。
+
+props は component が生成されたときに渡されるプロパティ (**prop**ertie**s**)で、public かつ immutable である。 +
+一方の state は、private かつ mutable な、いわゆる「状態」だ。
+
+今回作るボタンは、
+
+. ボタンに表示される文字 (`label`)
+. ボタンが押されたときに呼ばれる関数 (`onClick?`)
+
+の2つを受け取る。 +
+これらを interface として定義したものがコレだ。
+
+TypeScript では、最近の言語に多い `変数名: 型アノテーション` スタイルlink:#tip-type-annotation[^※^]の表記をする。
+
+`label` は *string* 型、つまり**文字列型**だ。 +
+TypeScript には、ほかに浮動小数点数型である *number* 型と、論理値型である *boolean* 型、何も返さない *void* 型、あらゆる型を指す *any* 型がある。
+
+`onClick?` の `?` は、省略可能であることを示す。ボタンが押されても何もしたくない怠慢な人でもこれで安心だ。
+
+そして、`() => void` は、「*引数を持たず、かつ void を返す関数*」を示す。 +
+そう、TypeScript では関数を渡したり受け取ったり、はたまた変数に入れておくことができるlink:#tip-first-class-function[^※^]のだ。
+
+{br}
+
+[[tip-type-annotation]]
+.`変数名: 型アノテーション` *スタイル*
+TIP: これは多くの場合、type-inference、つまり型推論と相性が良い。型推論のためにわざわざ `var` や `auto` などのキーワードを用意するよりも、型アノテーションを後置にして省略できるようにした方がより明確でスマートだ。
+
+[[tip-first-class-function]]
+.`first-class function`
+TIP: 関数をオブジェクトと同等に扱えるとき、「関数は**第一級オブジェクト**である」と言う。また、そうして扱える関数及びその性質を**第一級関数**と呼ぶ。第一級関数はプログラミングの柔軟さを大幅に高めることができる手法の一つで、ここ数年のプログラミング言語における流行でもある。
+
+{br}
+
+---
