@@ -7,7 +7,6 @@ trackiss
 :note-caption: :information_source:
 :syntax-highlighter: rouge
 :toc:
-:toc-title: 目次
 
 == これは何
 
