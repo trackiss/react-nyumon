@@ -6,6 +6,7 @@ trackiss
 :icons: font
 :note-caption: :information_source:
 :syntax-highlighter: rouge
+:tip-caption: :bulb:
 :toc:
 
 {br}
