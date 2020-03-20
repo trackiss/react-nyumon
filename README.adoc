@@ -387,7 +387,7 @@ export const MyButton: React.FC<Props> = (props: Props) => {
 その `return` 文の中身は... なんと *HTML* そっくりではないか。
 
 これは *TSX* という特殊なシンタックスで、実際には `React.createElement()` のシンタックスシュガーである。HTML っぽく書けた方が嬉しかろ？ というありがたい配慮だ。 +
-とは言っても中身は TypeScript なので、それに合わせ `onClick` プロパティも camelCase になっている。`class` プロパティも TypeScript の予約語なので `className` に変えられていたりする。
+とは言っても中身は TypeScript なので、それに合わせ `onClick` プロパティも camelCaselink:#note-camel-case[^※^] になっている。`class` プロパティも TypeScript の予約語なので `className` に変えられていたりする。
 
 この TSX、`{}` の中に任意の値を埋め込めるのが便利なところだ。今回は `onClick` プロパティとして `props` の `onClick?` を、`button` 要素の文字として `label` を埋め込んでいる。
 
