@@ -8,6 +8,8 @@ trackiss
 :syntax-highlighter: rouge
 :toc:
 
+{br}
+
 == これは何
 
 *React* + *TypeScript* の入門メモ。 +
@@ -33,7 +35,7 @@ TypeScript の syntax についてもなるべく解説を挟んでいくので�
 ** 「Bracket Pair Colorizer 2」もおすすめ
 ** 宗教上の理由でほかのテキストエディタや IDE を使うというのなら止めはしまい
 
-[br]
+{br}
 
 == 開発環境のセットアップ
 
