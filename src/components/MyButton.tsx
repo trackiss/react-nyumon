@@ -2,7 +2,7 @@ import * as React from 'react'
 
 interface Props {
   label: string,
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const MyButton: React.FC<Props> = (props: Props) => {

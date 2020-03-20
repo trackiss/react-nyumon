@@ -285,7 +285,7 @@ import * as React from 'react'
 
 interface Props {
   label: string,
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export const MyButton: React.FC<Props> = (props: Props) => {
@@ -314,7 +314,7 @@ import * as React from 'react'
 ----
 interface Props {
   label: string,
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
 ----
 
@@ -344,8 +344,10 @@ TypeScript には、ほかに浮動小数点数型である *number* 型と、�
 
 `onClick?` の `?` は、省略可能であることを示す。ボタンが押されても何もしたくない怠慢な人でもこれで安心だ。
 
-そして、`() => void` は、「*引数を持たず、かつ void を返す関数*」を示す**関数オブジェクト**だ。 +
+そして、`(e: React.MouseEvent<HTMLButtonElement>) => void` は、「*引数としてイベントを受け取り、void を返す関数*」を示す**関数オブジェクト**だ。 +
 そう、TypeScript では関数を渡したり受け取ったり、はたまた変数に入れておくことができるlink:#tip-first-class-function[^※^]のだ。
+
+`e: React.MouseEvent<HTMLButtonElement>` に関しては、そういうものだと思ってほしい。要は button 要素に対してマウスがなにか行動を起こしたとき、その行動の内容は何だったかという値だ。
 
 {br}
 
