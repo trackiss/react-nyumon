@@ -1,6 +1,6 @@
 = ReactTS入門メモ
 trackiss
-0.0.1, 2020-03-20
+0.0.2, 2020-03-21
 :br: pass:[ +]
 :doctype: article
 :icons: font
